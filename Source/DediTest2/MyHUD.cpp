@@ -4,13 +4,15 @@
 #include "MyHUD.h"
 
 #include "Chat.h"
+#include "MainUI.h"
 
 void AMyHUD::BeginPlay()
 {
-	if (ChatClass)
+	if (MainUIClass)
 	{
-		Chat = Cast<UChat>(CreateWidget(GetWorld(),ChatClass));
-		Chat->AddToViewport(1);
-		Chat->SetVisibility(ESlateVisibility::Visible);
+		MainUI = Cast<UMainUI>(CreateWidget(GetWorld(),MainUIClass));
+		MainUI->AddToViewport(1);
+		MainUI->SetVisibility(ESlateVisibility::Visible);
+		Chat = MainUI->GetChat();
 	}
 }

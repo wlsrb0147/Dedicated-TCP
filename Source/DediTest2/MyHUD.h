@@ -6,6 +6,7 @@
 #include "GameFramework/HUD.h"
 #include "MyHUD.generated.h"
 
+class UMainUI;
 class UChat;
 /**
  * 
@@ -20,8 +21,13 @@ protected:
 
 public:
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<UChat> ChatClass;
+	TSubclassOf<UMainUI> MainUIClass;
+
+	UPROPERTY()
+	UMainUI* MainUI;
 	
 	UPROPERTY()
 	UChat* Chat;
+
+	
 };
