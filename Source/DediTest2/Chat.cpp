@@ -4,9 +4,17 @@
 #include "Chat.h"
 
 #include "Components/Button.h"
+#include "Components/EditableTextBox.h"
 
 void UChat::OnSendButtonClicked()
 {
+	FString Context = ContextBox->GetText().ToString();
+	FString ID = IDBox->GetText().ToString();
+
+	if (Context != "" && ID != "")
+	{
+		UE_LOG(LogTemp,Warning,TEXT("Null 아님"))
+	}
 }
 
 void UChat::NativeConstruct()

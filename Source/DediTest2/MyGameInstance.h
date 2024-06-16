@@ -23,9 +23,14 @@ public:
 	bool ConnectServer();
 	void StopServer();
 
+	bool AcceptClient();
+	
+	bool SendTextToServer(FString Context);
+	bool SendTextToAllClient(FString Context);
 protected:
 
 public:
 	FSocket* ListenerSocket;
 	FIPv4Endpoint* Endpoint;
+	TArray<FSocket*> ConnectedClients;
 };

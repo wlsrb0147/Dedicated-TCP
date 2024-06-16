@@ -84,3 +84,43 @@ void UMyGameInstance::StopServer()
 {
 
 }
+
+bool UMyGameInstance::AcceptClient()
+{
+	if (!ListenerSocket) return false;
+
+	TSharedRef<FInternetAddr> ClientAddress = ISocketSubsystem::Get(PLATFORM_SOCKETSUBSYSTEM)->CreateInternetAddr();
+	bool Pending;
+
+	while (ListenerSocket->HasPendingConnection(Pending) && Pending)
+	{
+		FSocket* ClientSocket = ListenerSocket->Accept(*ClientAddress, TEXT("Accepted Client Connection"));
+		if (ClientSocket)
+		{
+			ConnectedClients.Add(ClientSocket);
+			return true;
+		}
+	}
+	return false;
+}
+
+bool UMyGameInstance::SendTextToServer(FString Context)
+{
+	return false;
+}
+
+bool UMyGameInstance::SendTextToAllClient(FString Context)
+{
+	for (FSocket* ClientSocket :ConnectedClients)
+	{
+		if (ClientSocket)
+		{
+			const TCHAR* SendData = *Context;
+			int32 BytesSent = 0;
+			ClientSocket->Send((uint8*)TCHAR_TO_UTF8(SendData),FCString::Strlen(SendData)*sizeof(TCHAR),BytesSent);
+		}
+	}
+	return true;
+
+	
+}
